@@ -1,69 +1,94 @@
-import Image from "next/image";
+"use client";
+
+import React, { useRef } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Navbar from "@/components/navbar";
+import Hero from "@/components/hero";
+import About from "@/components/about";
+import Experience from "@/components/experience";
+import Services from "@/components/services";
+import Projects from "@/components/projects";
+import Contact from "@/components/contact";
+import LiquidShader from "@/components/LiquidShader";
+
+// Register GSAP plugins on client side
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current || !bgRef.current || !overlayRef.current) return;
+
+    // 1. Zoom in the liquid shader background smoothly as user scrolls
+    gsap.to(bgRef.current, {
+      scale: 1.25,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: true,
+      },
+    });
+
+    // 2. Fade background to pure solid black as user scrolls into About
+    gsap.to(overlayRef.current, {
+      opacity: 1,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "20% top", // Starts fading smoothly as About enters the screen
+        end: "50% top",   // Reaches 100% solid pure black as About fills the viewport
+        scrub: true,
+      },
+    });
+  }, { scope: containerRef });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <main className="relative bg-[#0a0a0a] text-white selection:bg-[#e6e7e0] selection:text-[#0a0a0a]">
+      <Navbar />
+
+      {/* Hero + About Continuous Liquid Shader Container */}
+      <div ref={containerRef} className="relative w-full overflow-hidden">
+        {/* Continuous WebGL Liquid Shader Background spanning both Hero & About */}
+        <div
+          ref={bgRef}
+          className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 origin-center"
+        >
+          <LiquidShader imageSrc="/veil.webp" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60 z-0" />
+        </div>
+
+        {/* Blackout overlay that fades in only after About has been seen */}
+        <div
+          ref={overlayRef}
+          className="absolute inset-0 bg-[#0a0a0a] opacity-0 pointer-events-none z-[1]"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+
+        {/* Bottom gradient feather for a seamless transition into Experience */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 md:h-64 bg-gradient-to-b from-transparent to-[#0a0a0a] pointer-events-none z-[2]" />
+
+        {/* Foreground Content: Both Hero & About sit directly on top of the shader */}
+        <div className="relative z-10">
+          <Hero />
+          <About />
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </div>
+
+      {/* From Experience onward: 100% Pure Solid Black */}
+      <Projects />
+      <Services />
+      <Experience />
+
+
+      <Contact />
+    </main>
   );
 }

@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# font archives
+/fonnts.com-522073/
+/neue-montreal-v2-0-font-family/
+
