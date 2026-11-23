@@ -59,7 +59,7 @@ export default function Navbar() {
                         initial="rest"
                         animate="rest"
                         whileHover="hover"
-                        className="inline-flex items-center font-bold text-sm"
+                        className="inline-flex items-center font-bold text-base sm:text-base md:text-sm tracking-wider"
                     >
                         <Link href="/" className="inline-flex items-center">
                             <span>A</span>
@@ -141,7 +141,7 @@ export default function Navbar() {
                     <button
                         type="button"
                         onClick={() => setIsOpen((prev) => !prev)}
-                        className="sm:hidden relative z-50 text-xs uppercase tracking-widest text-neutral-200 hover:text-white font-medium pt-1"
+                        className="sm:hidden relative z-50 text-sm uppercase tracking-widest text-neutral-200 hover:text-white font-semibold pt-0.5"
                         aria-label="Toggle menu"
                     >
                         {isOpen ? "Close" : "Menu"}

@@ -1,7 +1,7 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -42,21 +42,21 @@ const featuredProjects: FeaturedProject[] = [
             "A modern logistics experience built to move businesses forward through smarter shipping, real-time visibility, and seamless digital interactions..",
         category: "Web",
         colors: ["#211e1f", "#e9decb"],
-        link: "/showcase/erbdesignco",
+        link: "https://shipnex-live.vercel.app/",
         isRightAligned: false,
         images: [
             {
-                src: "",
+                src: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445347/shipnex_path_img.png",
                 alt: "Project preview 1",
             },
             {
-                src: "",
+                src: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445347/shipnex_img_2.png",
                 alt: "Project preview 2",
             },
         ],
         video: {
-            src: "/projects/shipnex/shipnex_proj_vid.mp4",
-
+            src: "https://res.cloudinary.com/fqbuycsc/video/upload/q_auto,f_auto/v1795445325/shipnex_proj_vid.mp4",
+            poster: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445347/shipnex_path_img.png",
         },
     },
     {
@@ -64,23 +64,24 @@ const featuredProjects: FeaturedProject[] = [
         title: "Citadel IAM Platform",
         date: "July 2026",
         description:
-            "Empowering real estate visionaries with a digital experience that elevates luxury and amplifies ambition.",
+            "An identity management platform engineered for granular access control, intelligent policy evaluation, and secure enterprise governance.",
         category: "Web",
         colors: ["#af8d4d", "#f0ede1"],
-        link: "/showcase/the-mills-group",
+        link: "https://citadel-iam.vercel.app/",
         isRightAligned: true,
         images: [
             {
-                src: "",
+                src: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445336/citadel_cta.png",
                 alt: "Project preview 1",
             },
             {
-                src: "",
+                src: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445336/citadel_dashboard.png",
                 alt: "Project preview 2",
             },
         ],
         video: {
-            src: "/projects/citadel/citadel.mp4",
+            src: "https://res.cloudinary.com/fqbuycsc/video/upload/q_auto,f_auto/v1795445021/citadel.mp4",
+            poster: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445336/citadel_dashboard.png",
         },
     },
     {
@@ -88,35 +89,46 @@ const featuredProjects: FeaturedProject[] = [
         title: "Lead Magnet (Thumbstack Technologies) ",
         date: "January 2025",
         description:
-            "An identity management platform engineered for granular access control, intelligent policy evaluation, and secure enterprise governance.",
+            "Empowering real estate visionaries with a digital experience that elevates luxury and amplifies ambition .",
         category: "Web",
         colors: ["#0a0a0a", "#f8f8f8"],
-        link: "/showcase/brookiejennfilm",
+        link: "https://leadmagnet-live.vercel.app/",
         isRightAligned: false,
         images: [
             {
-                src: "",
+                src: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445337/leadmagnet_img1.png",
                 alt: "Project preview 1",
             },
             {
-                src: "",
+                src: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445336/leadmagnet_img2.png",
                 alt: "Project preview 2",
             },
         ],
         video: {
-            src: "/projects/citadel/citadel.mp4"
+            src: "https://res.cloudinary.com/fqbuycsc/video/upload/q_auto,f_auto/v1795444987/lead_magnet.mp4",
+            poster: "https://res.cloudinary.com/fqbuycsc/image/upload/q_auto,f_auto/v1795445337/leadmagnet_img1.png",
         },
     },
 ];
 
 const remainingProjects: RemainingProject[] = [
     {
-        id: "shipnex",
+        id: "SeatFlow",
         number: "01",
+        title: "SeatFlow",
+        date: "May 2026",
+        tech: "NextJS",
+        link: "https://seatflow-live.vercel.app/",
+        videoSrc: "",
+    },
+
+    {
+        id: "shipnex",
+        number: "02",
         title: "Shipnex",
         date: "June 2026",
         tech: "NextJS",
-        link: "/showcase/soul-waves-vinyl",
+        link: "https://shipnex-live.vercel.app/",
         videoSrc: "",
     },
     {
@@ -125,37 +137,67 @@ const remainingProjects: RemainingProject[] = [
         title: "Citadel IAM",
         date: "July 2026",
         tech: "NextJS",
-        link: "/showcase/bluebird-hardwater",
-        videoSrc: "",
-    },
-    {
-        id: "SeatFlow",
-        number: "03",
-        title: "SeatFlow",
-        date: "May 2026",
-        tech: "NextJS",
-        link: "/showcase/brookiejennfilm",
-        videoSrc: "",
-    },
-    {
-        id: "lead_magnet",
-        number: "04",
-        title: "Lead Magnet",
-        date: "September 2026",
-        tech: "NextJS",
-        link: "/showcase/the-mills-group",
+        link: "https://citadel-iam.vercel.app/",
         videoSrc: "",
     },
     {
         id: "shelfspace",
-        number: "05",
+        number: "04",
         title: "Shelfspace",
         date: "August 2026",
         tech: "NextJS",
-        link: "/showcase/create-radical",
+        link: "https://shelfspace-live.vercel.app/",
         videoSrc: "",
     },
+    {
+        id: "lead_magnet",
+        number: "05",
+        title: "Lead Magnet",
+        date: "September 2026",
+        tech: "NextJS",
+        link: "https://leadmagnet-live.vercel.app/",
+        videoSrc: "",
+    },
+
 ];
+
+function ProjectVideo({ src, poster }: { src: string; poster?: string }) {
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        // Auto-play smoothly when visible, pause when scrolled out of view
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    video.play().catch(() => { });
+                } else {
+                    video.pause();
+                }
+            },
+            { threshold: 0.15 }
+        );
+
+        observer.observe(video);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <video
+            ref={videoRef}
+            src={src}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            poster={poster}
+            className="w-full h-full object-cover"
+        />
+    );
+}
 
 export default function Projects() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -180,7 +222,7 @@ export default function Projects() {
                         id="featured-heading"
                         className="w-full text-[clamp(2.75rem,8vw,8rem)] font-sans font-semibold tracking-[-0.03em] text-[#0a0a0a] leading-[0.9] whitespace-nowrap"
                     >
-                        Selected work
+                        Selected Work
                     </h2>
                 </div>
 
@@ -199,35 +241,37 @@ export default function Projects() {
                                 {/* Project Information */}
                                 <div className="w-full lg:w-[38%] flex flex-col justify-between self-stretch">
                                     <div>
-                                        <h5 className="text-xs uppercase tracking-widest text-neutral-600 font-mono mb-3">
+                                        <span className="block text-xs uppercase tracking-widest text-neutral-700 font-mono mb-3">
                                             {project.date}
-                                        </h5>
-                                        <h2
+                                        </span>
+                                        <h3
                                             id={`project-${project.id}`}
-                                            className="text-3xl sm:text-4xl md:text-5xl font-sans font-normal tracking-tight text-[#0a0a0a] leading-[1.1]"
+                                            className="text-3xl sm:text-4xl md:text-5xl font-sans font-medium tracking-tight text-[#0a0a0a] leading-[1.1]"
                                         >
                                             {project.title}
-                                        </h2>
-                                        <p className="text-sm sm:text-base text-neutral-700 leading-relaxed mt-4 font-sans font-normal max-w-lg">
+                                        </h3>
+                                        <p className="text-base sm:text-lg md:text-xl text-neutral-700 leading-relaxed mt-4 sm:mt-5 font-sans font-normal max-w-xl">
                                             {project.description}
                                         </p>
                                     </div>
 
                                     {/* Project Link / Arrow Button */}
-                                    <div className="mt-8 pt-6 border-t border-[#0a0a0a]/15 flex items-center justify-end">
-                                        {/* Iconic Diagonal Arrow Icon */}
+                                    <div className="mt-6 flex items-center justify-end">
+                                        {/* Iconic Diagonal Arrow Link */}
                                         <a
                                             href={project.link}
-                                            aria-label={`View case study for ${project.title}`}
-                                            className="group p-2 -mr-2 rounded-full hover:bg-black/5 transition-colors"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label={`View live project for ${project.title}`}
+                                            className="group inline-block cursor-pointer text-[#0a0a0a]"
                                         >
                                             <svg
-                                                width="40"
-                                                height="42"
+                                                width="48"
+                                                height="50"
                                                 viewBox="0 0 48 50"
                                                 fill="#0a0a0a"
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                className="w-8 h-8 md:w-10 md:h-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+                                                className="w-8 h-8 sm:w-9 sm:h-9 md:w-10 md:h-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                                             >
                                                 <path d="M33.9547 41.6812L0.160156 5.88553L5.7121 0L39.5067 35.7999V4.24673H47.3595V50H4.16902V41.6812H33.9547Z" />
                                             </svg>
@@ -239,41 +283,26 @@ export default function Projects() {
                                 <div className="w-full lg:w-[58%] flex flex-col gap-4">
                                     {project.video && (
                                         <div className="w-full aspect-video bg-[#0a0a0a] rounded-sm overflow-hidden shadow-sm relative">
-                                            <video
-                                                autoPlay
-                                                playsInline
-                                                loop
-                                                muted
-                                                poster={project.video.poster}
-                                                className="w-full h-full object-cover"
-                                            >
-                                                <source src={project.video.src} type="video/mp4" />
-                                            </video>
+                                            <ProjectVideo src={project.video.src} poster={project.video.poster} />
                                         </div>
                                     )}
 
-                                    <div className="grid grid-cols-2 sm:grid-cols-8 gap-4">
+                                    <div className="grid grid-cols-2 sm:flex sm:items-center gap-3 sm:gap-4">
                                         {project.images.map((img, idx) => (
                                             <div
                                                 key={idx}
-                                                className="w-full sm:w-24 aspect-square bg-[#0a0a0a]/5 border border-[#0a0a0a]/15 rounded-sm overflow-hidden relative group flex items-center justify-center transition-colors hover:border-[#0a0a0a]/30"
+                                                className="w-full sm:w-48 md:w-56 aspect-video bg-[#0a0a0a] rounded-sm overflow-hidden relative group border border-[#0a0a0a]/10 shadow-xs transition-transform duration-300"
                                             >
-                                                {img.src ? (
-                                                    <img
+                                                {img.src && (
+                                                    <Image
                                                         src={img.src}
                                                         alt={img.alt}
+                                                        width={1200}
+                                                        height={675}
+                                                        quality={100}
                                                         loading="lazy"
                                                         className="w-full h-full object-cover transition-transform duration-500"
                                                     />
-                                                ) : (
-                                                    <div className="w-full h-full flex flex-col items-center justify-center text-neutral-400 group-hover:text-neutral-600 transition-colors">
-                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="opacity-40 mb-1">
-                                                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                                                            <circle cx="9" cy="9" r="2" />
-                                                            <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
-                                                        </svg>
-                                                        <span className="text-[9px] font-mono tracking-wider uppercase opacity-50">Img {idx + 1}</span>
-                                                    </div>
                                                 )}
                                             </div>
                                         ))}
@@ -286,7 +315,7 @@ export default function Projects() {
 
                 {/* Remaining Compact Showcases List */}
                 <div className="w-full border-t border-[#0a0a0a]/20 pt-10 md:pt-14">
-                    <h3 className="text-xs uppercase font-mono tracking-widest text-neutral-600 mb-6">
+                    <h3 className="text-xs uppercase font-mono tracking-widest text-neutral-700 mb-6">
                         Archive / Recent Showcases
                     </h3>
 
@@ -295,41 +324,26 @@ export default function Projects() {
                             <li key={item.id}>
                                 <a
                                     href={item.link}
-                                    aria-label={`View case study for ${item.title}`}
-                                    className="group flex flex-col sm:flex-row sm:items-center justify-between py-5 md:py-6 gap-4 hover:px-2 transition-all duration-300"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="group flex flex-col sm:flex-row sm:items-center justify-between py-5 md:py-6 gap-4 hover:px-2 transition-all duration-300 cursor-pointer"
                                 >
                                     <div className="flex items-center gap-6 sm:gap-10">
-                                        <span className="text-xs font-mono text-neutral-500 font-semibold">
+                                        <span className="text-xs font-mono text-neutral-700 font-semibold">
                                             {item.number}
                                         </span>
-                                        <h4 className="text-xl sm:text-2xl md:text-3xl font-sans font-normal tracking-tight text-[#0a0a0a] group-hover:text-neutral-700 transition-colors">
+                                        <h4 className="text-xl sm:text-2xl md:text-3xl font-sans font-medium tracking-tight text-[#0a0a0a] group-hover:text-neutral-700 transition-colors">
                                             {item.title}
                                         </h4>
                                     </div>
 
                                     <div className="flex items-center justify-between sm:justify-end gap-6 md:gap-12 pl-12 sm:pl-0">
-                                        <span className="text-xs font-mono uppercase text-neutral-600">
+                                        <span className="text-xs font-mono uppercase text-neutral-700">
                                             {item.date}
                                         </span>
-                                        <span className="hidden md:inline-block text-xs font-mono uppercase text-neutral-500">
+                                        <span className="hidden md:inline-block text-xs font-mono uppercase text-neutral-700">
                                             {item.tech}
                                         </span>
-
-                                        <div className="hidden sm:flex items-center justify-center w-16 h-10 md:w-20 md:h-12 bg-[#0a0a0a]/5 border border-[#0a0a0a]/15 rounded overflow-hidden shadow-xs relative shrink-0">
-                                            {item.videoSrc ? (
-                                                <video
-                                                    autoPlay
-                                                    playsInline
-                                                    loop
-                                                    muted
-                                                    className="w-full h-full object-cover"
-                                                >
-                                                    <source src={item.videoSrc} type="video/mp4" />
-                                                </video>
-                                            ) : (
-                                                <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-wider opacity-60">Vid</span>
-                                            )}
-                                        </div>
 
                                         <div className="p-1 text-[#0a0a0a] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                                             <svg

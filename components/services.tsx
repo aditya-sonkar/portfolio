@@ -178,11 +178,10 @@ export default function Services() {
                 <ul className="w-full flex flex-col list-none p-0 m-0">
 
                     {/* --- COMPACT LEGEND BAR --- */}
-                    <li className="flex justify-between items-center text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] opacity-60 pb-1.5">
-                        <h5>Service Name</h5>
+                    <li className="flex justify-between items-center text-[9px] md:text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 pb-1.5">
+                        <span>Service Name</span>
                         <div className="flex items-center gap-1.5">
-                            <h5>Click to get more info</h5>
-
+                            <span>Click to get more info</span>
                         </div>
                     </li>
 
@@ -210,9 +209,9 @@ export default function Services() {
 
                                     {/* Title and Icon */}
                                     <div className="flex items-center justify-between">
-                                        <h4 className="service-title text-lg sm:text-xl md:text-[22px] lg:text-[24px] font-sans font-medium tracking-normal text-[#e6e7e0]">
+                                        <h3 className="service-title text-lg sm:text-xl md:text-[22px] lg:text-[24px] font-sans font-medium tracking-normal text-[#e6e7e0]">
                                             {service.title}
-                                        </h4>
+                                        </h3>
 
                                         {/* Icon */}
                                         <div
@@ -241,9 +240,9 @@ export default function Services() {
                                         className="h-0 opacity-0 overflow-hidden"
                                     >
                                         <div className="pt-3 pb-2 max-w-3xl">
-                                            <h3 className="text-xs sm:text-sm md:text-[15px] font-light leading-relaxed text-[#e6e7e0]/80 mb-3">
+                                            <p className="text-xs sm:text-sm md:text-[15px] font-light leading-relaxed text-[#e6e7e0]/80 mb-3">
                                                 {service.description}
-                                            </h3>
+                                            </p>
 
                                             {/* Framework Badges */}
                                             <div className="flex flex-wrap gap-1.5 sm:gap-2">
@@ -252,7 +251,7 @@ export default function Services() {
                                                         key={framework}
                                                         className="px-2.5 py-0.5 rounded-full border border-[#e6e7e0]/25 bg-[#0a0a0a] text-[#e6e7e0] text-[10px] sm:text-xs font-mono uppercase tracking-wider"
                                                     >
-                                                        <h5>{framework}</h5>
+                                                        <span>{framework}</span>
                                                     </div>
                                                 ))}
                                             </div>

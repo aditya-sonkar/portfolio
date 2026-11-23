@@ -234,13 +234,11 @@ export default function LiquidShader({
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("mouseleave", handleMouseLeave);
 
-    // Responsive Canvas Resizing with guaranteed fallbacks
+    // Responsive Canvas Resizing with guaranteed fallbacks (no DOM layout thrashing)
     const resizeCanvas = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const width = canvas.parentElement?.clientWidth || window.innerWidth || 1920;
-      const height = canvas.parentElement?.clientHeight || window.innerHeight || 1080;
-      const finalWidth = width > 0 ? width : window.innerWidth;
-      const finalHeight = height > 0 ? height : window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      const finalWidth = window.innerWidth || 1920;
+      const finalHeight = window.innerHeight || 1080;
 
       if (canvas.width !== finalWidth * dpr || canvas.height !== finalHeight * dpr) {
         canvas.width = finalWidth * dpr;
@@ -252,13 +250,22 @@ export default function LiquidShader({
     window.addEventListener("resize", resizeCanvas);
     resizeCanvas();
 
-    // Render Animation Loop
+    // Render Animation Loop with Visibility & Frame Rate Optimization
+    let isVisible = true;
     let animationFrameId: number;
+    let lastRenderTime = 0;
+    const fpsInterval = 1000 / 30; // 30 FPS for buttery ambient fluid motion with 50% CPU savings
     const startTime = performance.now();
 
-    const render = () => {
-      const now = performance.now();
-      const time = (now - startTime) * 0.001;
+    const render = (currentTime: number = performance.now()) => {
+      if (!isVisible) return;
+      animationFrameId = requestAnimationFrame(render);
+
+      const elapsed = currentTime - lastRenderTime;
+      if (elapsed < fpsInterval) return;
+      lastRenderTime = currentTime - (elapsed % fpsInterval);
+
+      const time = (currentTime - startTime) * 0.001;
 
       // Smooth inertia lerp (fluid damping)
       currentMouse.x += (targetMouse.x - currentMouse.x) * 0.09;
@@ -287,13 +294,24 @@ export default function LiquidShader({
       gl.uniform1f(uIntensityLoc, safeIntensity);
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = requestAnimationFrame(render);
+      }
+    }, { threshold: 0.05 });
+    observer.observe(canvas);
+
+    const timeoutId = setTimeout(() => {
+      render();
+    }, 120);
 
     return () => {
+      clearTimeout(timeoutId);
+      observer.disconnect();
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);

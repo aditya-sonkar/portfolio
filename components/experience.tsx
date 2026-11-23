@@ -71,8 +71,8 @@ export default function Experience() {
         const headings = gsap.utils.toArray<HTMLElement>(".exp-heading");
         const contents = gsap.utils.toArray<HTMLElement>(".exp-content");
 
-        // 1. Subtle idle floating animation (alive creature effect)
-        if (floatRef.current) {
+        // 1. Subtle idle floating animation (alive creature effect) - only active when section is in view
+        if (floatRef.current && containerRef.current) {
             gsap.to(floatRef.current, {
                 y: -4,
                 rotation: 2,
@@ -80,6 +80,12 @@ export default function Experience() {
                 repeat: -1,
                 yoyo: true,
                 ease: "sine.inOut",
+                scrollTrigger: {
+                    trigger: containerRef.current,
+                    start: "top bottom",
+                    end: "bottom top",
+                    toggleActions: "play pause resume pause",
+                },
             });
         }
 
@@ -99,19 +105,19 @@ export default function Experience() {
             rows.forEach((_, i) => {
                 const isActive = i === index;
 
-                // Left heading translates -20px if active, 0 if inactive
+                // Left heading translates -20px if active, 0 if inactive (GPU composited)
                 gsap.to(headings[i], {
                     x: isActive ? -shift : 0,
-                    color: isActive ? "#a6a6a6" : "#525252",
+                    opacity: isActive ? 1 : 0.78,
                     duration: 0.3,
                     ease: "power3.out",
                     overwrite: "auto",
                 });
 
-                // Right content translates +20px if active, 0 if inactive
+                // Right content translates +20px if active, 0 if inactive (GPU composited)
                 gsap.to(contents[i], {
                     x: isActive ? shift : 0,
-                    color: isActive ? "#a6a6a6" : "#525252",
+                    opacity: isActive ? 1 : 0.78,
                     duration: 0.3,
                     ease: "power3.out",
                     overwrite: "auto",
@@ -162,17 +168,17 @@ export default function Experience() {
                 {/* 1. Education */}
                 <div className="exp-row flex flex-col md:flex-row items-start group">
                     <div className="exp-heading w-full md:w-1/2 md:pr-32 md:text-right">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase transition-colors tracking-tight font-medium">
+                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase tracking-tight font-medium">
                             EDUCATION
                         </h2>
                     </div>
 
-                    <div className="exp-content w-full md:w-1/2 md:pl-32 flex flex-col gap-7 transition-colors">
+                    <div className="exp-content w-full md:w-1/2 md:pl-32 flex flex-col gap-7">
                         {education.map((item) => (
                             <div key={item.degree} className="space-y-1.5">
                                 <p className="text-base sm:text-lg md:text-xl font-medium">{item.degree}</p>
                                 <p className="text-sm sm:text-base md:text-[17px] opacity-90">— {item.college}</p>
-                                <p className="text-xs sm:text-[13px] font-mono opacity-60">[{item.year}]</p>
+                                <p className="text-xs sm:text-[13px] font-mono text-neutral-300">[{item.year}]</p>
                             </div>
                         ))}
                     </div>
@@ -181,12 +187,12 @@ export default function Experience() {
                 {/* 2. Tech Stack */}
                 <div className="exp-row flex flex-col md:flex-row items-start group">
                     <div className="exp-heading w-full md:w-1/2 md:pr-32 md:text-right">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase transition-colors tracking-tight font-medium">
+                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase tracking-tight font-medium">
                             Stack
                         </h2>
                     </div>
 
-                    <div className="exp-content w-full md:w-1/2 md:pl-32 transition-colors">
+                    <div className="exp-content w-full md:w-1/2 md:pl-32">
                         <p className="text-base sm:text-lg md:text-xl leading-relaxed font-normal">
                             {techStack.join(" / ")}
                         </p>
@@ -196,16 +202,16 @@ export default function Experience() {
                 {/* 3. Experience */}
                 <div className="exp-row flex flex-col md:flex-row items-start group">
                     <div className="exp-heading w-full md:w-1/2 md:pr-32 md:text-right">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase transition-colors tracking-tight font-medium">
+                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase tracking-tight font-medium">
                             Experience
                         </h2>
                     </div>
 
-                    <div className="exp-content w-full md:w-1/2 md:pl-32 flex flex-col gap-6 transition-colors">
+                    <div className="exp-content w-full md:w-1/2 md:pl-32 flex flex-col gap-6">
                         {experience.map((item) => (
                             <div key={item.role} className="space-y-1.5">
                                 <p className="text-base sm:text-lg md:text-xl font-medium">{item.role} — {item.company}</p>
-                                <p className="text-xs sm:text-[13px] font-mono opacity-60">[{item.duration}]</p>
+                                <p className="text-xs sm:text-[13px] font-mono text-neutral-300">[{item.duration}]</p>
                             </div>
                         ))}
                     </div>
@@ -214,12 +220,12 @@ export default function Experience() {
                 {/* 4. I Can Help You With */}
                 <div className="exp-row flex flex-col md:flex-row items-start group">
                     <div className="exp-heading w-full md:w-1/2 md:pr-32 md:text-right">
-                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase transition-colors tracking-tight font-medium">
+                        <h2 className="text-xl sm:text-2xl md:text-3xl uppercase tracking-tight font-medium">
                             I can help you with
                         </h2>
                     </div>
 
-                    <div className="exp-content w-full md:w-1/2 md:pl-32 transition-colors">
+                    <div className="exp-content w-full md:w-1/2 md:pl-32">
                         <p className="text-base sm:text-lg md:text-xl leading-relaxed font-normal">
                             {help.join(", ")}
                         </p>

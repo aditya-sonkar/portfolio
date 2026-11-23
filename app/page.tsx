@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/navbar";
 import Hero from "@/components/hero";
 import About from "@/components/about";
@@ -11,7 +12,10 @@ import Experience from "@/components/experience";
 import Services from "@/components/services";
 import Projects from "@/components/projects";
 import Contact from "@/components/contact";
-import LiquidShader from "@/components/LiquidShader";
+
+const LiquidShader = dynamic(() => import("@/components/LiquidShader"), {
+  ssr: false,
+});
 
 // Register GSAP plugins on client side
 if (typeof window !== "undefined") {
@@ -84,8 +88,9 @@ export default function Home() {
 
       {/* From Experience onward: 100% Pure Solid Black */}
       <Projects />
-      <Services />
       <Experience />
+      <Services />
+
 
 
       <Contact />

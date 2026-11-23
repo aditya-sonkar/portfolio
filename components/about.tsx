@@ -10,35 +10,56 @@ if (typeof window !== "undefined") {
     gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
+const aboutText =
+    "I design and build full stack web applications that look and feel right, and I put the same obsession into the frontend interfaces and the backend code underneath. I am based in Mumbai.";
+
 export default function About() {
     const sectionRef = useRef<HTMLElement>(null);
     const textRef = useRef<HTMLParagraphElement>(null);
 
     useGSAP(
         () => {
-            if (!textRef.current) return;
+            if (!textRef.current || !sectionRef.current) return;
 
-            const words = textRef.current.querySelectorAll(".reveal-word");
-
+            // 1. Move text container smoothly up from below to the top mark
             gsap.fromTo(
-                words,
+                textRef.current,
                 {
-                    opacity: 0.15,
-                    filter: "blur(10px)",
+                    y: 70,
                 },
                 {
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    stagger: 0.1,
-                    ease: "none",
+                    y: 0,
+                    ease: "power2.out",
                     scrollTrigger: {
-                        trigger: textRef.current,
-                        start: "top 75%",
-                        end: "center 60%",
+                        trigger: sectionRef.current,
+                        start: "top 80%",
+                        end: "top 25%",
                         scrub: 1,
                     },
                 }
             );
+
+            // 2. Initial grey to white word-by-word reveal as user scrolls
+            const words = textRef.current.querySelectorAll(".reveal-word");
+            if (words.length > 0) {
+                gsap.fromTo(
+                    words,
+                    {
+                        color: "#525252",
+                    },
+                    {
+                        color: "#ffffff",
+                        stagger: 0.1,
+                        ease: "none",
+                        scrollTrigger: {
+                            trigger: textRef.current,
+                            start: "top 90%",
+                            end: "center 65%",
+                            scrub: 1,
+                        },
+                    }
+                );
+            }
         },
         { scope: sectionRef }
     );
@@ -47,67 +68,36 @@ export default function About() {
         <section
             ref={sectionRef}
             id="about"
-            className="w-full min-h-screen text-white px-6 md:px-16 py-32 md:py-48 flex items-center justify-center relative z-10"
+            className="w-full min-h-screen text-white px-6 md:px-16 py-20 sm:py-28 md:py-36 lg:py-44 flex items-center justify-center relative z-10"
         >
-            <div className="max-w-[1770px] w-full mx-auto flex flex-col lg:flex-row items-center gap-8 lg:gap-14">
+            <div className="max-w-[1770px] w-full mx-auto flex flex-col lg:flex-row items-start gap-10 lg:gap-16 xl:gap-20">
 
-                {/* 1. Left: Clean Pure Image */}
-                <div className="w-full lg:w-auto shrink-0">
-                    <Image
-                        src="/images/aditya_img.jpg"
-                        alt="Aditya Sonkar"
-                        width={540}
-                        height={365}
-                        className="w-full sm:w-[480px] lg:w-[540px] h-auto object-cover"
-                        priority
-                    />
+                {/* 1. Left: Portrait Headshot Image */}
+                <div className="w-full sm:w-[380px] lg:w-[440px] xl:w-[480px] shrink-0">
+                    <div className="w-full aspect-[4/5] overflow-hidden rounded-sm bg-[#121212] shadow-sm">
+                        <Image
+                            src="/images/aditya_img.jpg"
+                            alt="Aditya Sonkar"
+                            width={520}
+                            height={650}
+                            className="w-full h-full object-cover object-center"
+                        />
+                    </div>
                 </div>
 
-                {/* 2. Right: Editorial Scroll-Reveal Typography adjusted right next to the image */}
-                <div className="flex-1 flex flex-col justify-center">
+                {/* 2. Right: Editorial Typography */}
+                <div className="flex-1 flex flex-col justify-start">
                     <p
                         ref={textRef}
-                        className="font-neue-montreal text-2xl sm:text-3xl md:text-4xl lg:text-[2.65rem] font-normal leading-[1.22] tracking-tight text-neutral-100 selection:bg-white selection:text-black"
+                        className="font-neue-montreal text-[1.85rem] sm:text-[2.25rem] md:text-4xl lg:text-[2.85rem] xl:text-[3.35rem] font-normal leading-[1.22] tracking-tight selection:bg-white selection:text-black"
                     >
-                        <span className="reveal-word inline-block mr-3">I'm</span>
-                        <span className="reveal-word inline-block mr-3">a</span>
-                        <span className="reveal-word inline-block mr-3 text-white">
-                            Full Stack developer
-                        </span>
-                        <span className="reveal-word inline-block mr-3">passionate</span>
-                        <span className="reveal-word inline-block mr-3">about</span>
-                        <span className="reveal-word inline-block mr-3">building</span>
-                        <span className="reveal-word inline-block mr-3">modern</span>
-                        <span className="reveal-word inline-block mr-3">digital</span>
-                        <span className="reveal-word inline-block mr-3">experiences</span>
-                        <span className="reveal-word inline-block mr-3">that</span>
-                        <span className="reveal-word inline-block mr-3">balance</span>
-                        <span className="reveal-word inline-block mr-3">thoughtful</span>
-                        <span className="reveal-word inline-block mr-3 font-apparel italic text-white">
-                            design
-                        </span>
-                        <span className="reveal-word inline-block mr-3">with</span>
-                        <span className="reveal-word inline-block mr-3">powerful</span>
-                        <span className="reveal-word inline-block mr-3">functionality.</span>
-                        <span className="reveal-word inline-block mr-3">From</span>
-                        <span className="reveal-word inline-block mr-3">crafting</span>
-                        <span className="reveal-word inline-block mr-3">intuitive</span>
-                        <span className="reveal-word inline-block mr-3">interfaces</span>
-                        <span className="reveal-word inline-block mr-3">to</span>
-                        <span className="reveal-word inline-block mr-3">developing</span>
-                        <span className="reveal-word inline-block mr-3">reliable</span>
-                        <span className="reveal-word inline-block mr-3">backend</span>
-                        <span className="reveal-word inline-block mr-3">systems,</span>
-                        <span className="reveal-word inline-block mr-3">I</span>
-                        <span className="reveal-word inline-block mr-3">turn</span>
-                        <span className="reveal-word inline-block mr-3">ideas</span>
-                        <span className="reveal-word inline-block mr-3">into</span>
-                        <span className="reveal-word inline-block mr-3">seamless,</span>
-                        <span className="reveal-word inline-block mr-3">scalable,</span>
-                        <span className="reveal-word inline-block mr-3">and</span>
-                        <span className="reveal-word inline-block mr-3">engaging</span>
-                        <span className="reveal-word inline-block mr-3">web</span>
-                        <span className="reveal-word inline-block mr-3">applications.</span>
+                        {aboutText.split(" ").map((word, idx) => (
+                            <React.Fragment key={idx}>
+                                <span className="reveal-word text-[#525252]">
+                                    {word}
+                                </span>{" "}
+                            </React.Fragment>
+                        ))}
                     </p>
                 </div>
 

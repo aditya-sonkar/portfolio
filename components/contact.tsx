@@ -35,7 +35,7 @@ export default function Contact() {
 
                 {/* Bottom Simple Text Links & Colophon */}
                 <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-4 pt-6 border-t border-white/10 text-xs sm:text-sm font-sans">
-                    <p className="text-neutral-500 hidden md:block">
+                    <p className="text-neutral-400 hidden md:block">
                         © 2026 Aditya Sonkar
                     </p>
 
@@ -65,12 +65,12 @@ export default function Contact() {
                         </Link>
                     </div>
 
-                    <p className="text-neutral-500 hidden md:block">
+                    <p className="text-neutral-400 hidden md:block">
                         Designed in Mumbai
                     </p>
 
                     {/* Mobile Only: Single bottom line for Copyright & Location */}
-                    <div className="w-full flex items-center justify-between text-neutral-500 md:hidden pt-2">
+                    <div className="w-full flex items-center justify-between text-neutral-400 md:hidden pt-2">
                         <span>© 2026 Aditya Sonkar</span>
                         <span>Designed in Mumbai</span>
                     </div>

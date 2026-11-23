@@ -1,45 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Nunito_Sans, DM_Serif_Display } from "next/font/google";
+import { Geist_Mono, Nunito_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
-
-const interFont = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const woffFont = localFont({
-  src: "./fonts/custom.woff2",
-  variable: "--font-woff",
-  display: "swap",
-});
-
-const formulaFont = localFont({
-  src: "./fonts/PPFormula-CondensedBlack.otf",
-  variable: "--font-formula",
   display: "swap",
 });
 
 const nunitoSans = Nunito_Sans({
   variable: "--font-nunito",
   subsets: ["latin"],
-});
-
-const dmSerif = DM_Serif_Display({
-  weight: "400",
-  variable: "--font-dm-serif",
-  subsets: ["latin"],
+  display: "swap",
 });
 
 const apparelFont = localFont({
@@ -54,21 +28,6 @@ const apparelFont = localFont({
       weight: "400",
       style: "italic",
     },
-    {
-      path: "./fonts/ApparelDisplay-Bold.otf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "./fonts/ApparelDisplay-BoldItalic.otf",
-      weight: "700",
-      style: "italic",
-    },
-    {
-      path: "./fonts/ApparelDisplay-BlackItalic.otf",
-      weight: "900",
-      style: "italic",
-    },
   ],
   variable: "--font-apparel",
   display: "swap",
@@ -77,19 +36,9 @@ const apparelFont = localFont({
 const neueMontreal = localFont({
   src: [
     {
-      path: "./fonts/ppneuemontreal-thin.otf",
-      weight: "100",
-      style: "normal",
-    },
-    {
       path: "./fonts/ppneuemontreal-book.otf",
       weight: "400",
       style: "normal",
-    },
-    {
-      path: "./fonts/ppneuemontreal-italic.otf",
-      weight: "400",
-      style: "italic",
     },
     {
       path: "./fonts/ppneuemontreal-medium.otf",
@@ -97,19 +46,9 @@ const neueMontreal = localFont({
       style: "normal",
     },
     {
-      path: "./fonts/ppneuemontreal-medium.otf",
-      weight: "600",
-      style: "normal",
-    },
-    {
       path: "./fonts/ppneuemontreal-bold.otf",
       weight: "700",
       style: "normal",
-    },
-    {
-      path: "./fonts/ppneuemontreal-semibolditalic.otf",
-      weight: "600",
-      style: "italic",
     },
   ],
   variable: "--font-neue-montreal",
@@ -118,14 +57,18 @@ const neueMontreal = localFont({
 
 export const metadata: Metadata = {
   title: "Aditya Sonkar - Portfolio",
-  description: "Personal Portfolio",
+  description: "Personal Portfolio of Aditya Sonkar - Full Stack Developer",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${woffFont.variable} ${formulaFont.variable} ${interFont.variable} ${nunitoSans.variable} ${dmSerif.variable} ${apparelFont.variable} ${neueMontreal.variable} antialiased`}
+      className={`${geistMono.variable} ${nunitoSans.variable} ${apparelFont.variable} ${neueMontreal.variable} antialiased`}
     >
       <body className="flex flex-col font-sans">
         <SmoothScroll>{children}</SmoothScroll>

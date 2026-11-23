@@ -44,3 +44,6 @@ next-env.d.ts
 /fonnts.com-522073/
 /neue-montreal-v2-0-font-family/
 
+# lighthouse reports
+lighthouse*.json
+
