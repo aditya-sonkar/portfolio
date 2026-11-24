@@ -46,12 +46,12 @@ const servicesData: ServiceItem[] = [
         frameworks: ["NextJS", "NodeJS", "Javascript", "ReactJS"],
     },
     {
-        id: "digital-experience-consulting",
+        id: "cms-integration",
         title: "CMS Integration",
         description:
-            "Consulting services to help elevate your brand’s digital presence by integrating modern typography, custom animations, and thoughtful UX design.",
-        frameworks: ["Strapi", "UI/UX", "Development Stack"],
-    },
+            "Headless CMS integration using Strapi that empowers your team to update and publish content effortlessly without touching code. Clean content schemas and decoupled systems tailored for modern, high-performance web applications.",
+        frameworks: ["Strapi", "Headless CMS"],
+    }
 ];
 
 export default function Services() {

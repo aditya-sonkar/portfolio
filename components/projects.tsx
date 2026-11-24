@@ -87,9 +87,9 @@ const featuredProjects: FeaturedProject[] = [
     {
         id: "lead-magnet",
         title: "Lead Magnet (Thumbstack Technologies) ",
-        date: "January 2025",
+        date: "September 2026",
         description:
-            "Empowering real estate visionaries with a digital experience that elevates luxury and amplifies ambition .",
+            "A responsive lead-generation platform featuring an interactive multi-step Shopify quote estimator, dynamic pricing calculations, and seamless lead capture.",
         category: "Web",
         colors: ["#0a0a0a", "#f8f8f8"],
         link: "https://leadmagnet-live.vercel.app/",
