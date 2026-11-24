@@ -86,7 +86,7 @@ const featuredProjects: FeaturedProject[] = [
     },
     {
         id: "lead-magnet",
-        title: "Lead Magnet (Thumbstack Technologies) ",
+        title: "Lead Magnet (Thumbstack) ",
         date: "September 2026",
         description:
             "A responsive lead-generation platform featuring an interactive multi-step Shopify quote estimator, dynamic pricing calculations, and seamless lead capture.",
