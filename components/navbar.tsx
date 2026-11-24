@@ -7,7 +7,7 @@ import Link from "next/link";
 const navItems = [
     { href: "/services", label: "Services" },
     { href: "/selected_work", label: "Selected Work" },
-    { href: "https://drive.google.com/file/d/1ZBltTrI9U77EsHEGyM3CnXMhwDjju0RT/view?usp=sharing", label: "Resume" },
+    { href: "https://drive.google.com/file/d/1vXcEH8w0oxCG27yIqam7U89YOeVWuvHD/view?usp=drive_link", label: "Resume" },
     { href: "/contact", label: "Contact" },
 ]
 
